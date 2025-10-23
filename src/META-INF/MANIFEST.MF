@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+com.main.Main-Class: com.main.Main
+
