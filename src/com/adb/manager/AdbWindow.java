@@ -29,6 +29,7 @@ import java.util.Map;
  */
 public class AdbWindow {
     private JFrame rootView;
+    private String keyName = "sign_file_data";
 
     public void initView() {
 
@@ -46,7 +47,7 @@ public class AdbWindow {
         rootView.setVisible(true);
         //
         //读取数据
-        Object bean = FileUtile.getObj("sign_file");
+        Object bean = FileUtile.getObj(keyName);
         if (bean != null) {
             DevData devData = (DevData) bean;
             ipET.setText(devData.ipAddr);
@@ -246,7 +247,7 @@ public class AdbWindow {
                 //
                 DevData devData = new DevData();
                 devData.ipAddr = ips;
-                boolean isSave = FileUtile.saveObj(devData, "sign_file");
+                boolean isSave = FileUtile.saveObj(devData, keyName);
                 System.out.println("保存数据成功？" + isSave);
                 //
                 msgJl.setText("开始链接 " + ips + ":" + port);

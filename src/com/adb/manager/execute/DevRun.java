@@ -15,7 +15,7 @@ public class DevRun extends SwingWorker {
     private boolean isRun = true;
     private DevRunListener devRunListener;
     //延时
-    private int timeDelay = 10;
+    private int timeDelay = 60;//单位秒
 
     public DevRun(DevRunListener devRunListener) {
         this.devRunListener = devRunListener;
@@ -36,7 +36,7 @@ public class DevRun extends SwingWorker {
             int timeTemp = timeDelay;
             for (int i = 0; i < devs.size(); i++) {
                 ItemBaen dev = devs.get(i);
-                dev.runType = -1;
+                dev.runType = 1;
                 setRun(dev);
                 //setDevRun(dev);
             }
@@ -59,18 +59,6 @@ public class DevRun extends SwingWorker {
 
     //开始运行
     private void setRun(ItemBaen dev) {
-        ArrayList<Integer> runTypes = dev.runTypes;
-        if (runTypes == null || runTypes.size() == 0) {
-            String msg = "执行：没有指令";
-            System.out.println(msg);
-            return;
-        }
-
-        if (dev.runType >= runTypes.size()) {
-            return;
-        }
-        dev.runType += 1;
-
         switch (dev.runType) {
             case 1:
                 //上下动
@@ -88,6 +76,9 @@ public class DevRun extends SwingWorker {
                 //获取最上面的act名称
                 setDevRunActTop(dev);
                 break;
+            default:
+                System.out.println("执行：运行类型错误");
+                break;
         }
     }
 
@@ -95,12 +86,10 @@ public class DevRun extends SwingWorker {
         Adb.getInstance().onDevicesRun(dev.name, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult 运行：" + state + " :" + res);
+                System.out.println("onCmdResult 运行结果：" + state + " :" + res);
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
-                } else {
-                    setRun(dev);
                 }
             }
         });

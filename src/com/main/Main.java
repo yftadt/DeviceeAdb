@@ -13,8 +13,8 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-         AESRunIng();
-        //adbRunIng();
+        //AESRunIng();
+         adbRunIng();
         //test12();
 
         //imgSetSize();

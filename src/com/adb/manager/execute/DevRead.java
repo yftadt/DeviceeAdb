@@ -46,6 +46,7 @@ public class DevRead extends SwingWorker {
                 }
                 //单一设备
                 //List of devices attached 10.168.5.143:40975 device
+                //List of devices attached RRCX1066YVD device
                 res = res.replace("List of devices attached", "");
                 String[] devices = res.split("device");
                 if (devices == null) {
