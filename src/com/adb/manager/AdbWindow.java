@@ -10,7 +10,7 @@ import com.adb.item.ui.DevItemUi;
 import com.adb.item.ui.CellRenderer;
 import com.adb.manager.command.Adb;
 import com.adb.manager.command.DevManager;
-import com.adb.manager.view.ADBView;
+import com.adb.manager.ui.ADBView;
 import com.utile.FileUtile;
 import com.utile.IPS;
 import com.view.JPanelFixed;

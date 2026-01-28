@@ -1,7 +1,7 @@
-package com.adb.manager.view;
+package com.adb.manager.ui;
 
 import com.adb.listener.DevAdbListener;
-import com.adb.listener.DevLinkListener;
+import com.adb.manager.command.Adb;
 import com.adb.manager.command.DevManager;
 import com.view.JPanelFixed;
 import com.view.Views;
@@ -72,8 +72,10 @@ public class ADBView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //
-                System.out.println("新的ADB");
-
+                String adbPath = adbET.getText().toString();
+                System.out.println("新的ADB->" + adbPath);
+                String res = Adb.setAdbPath(adbPath);
+                msgADBJl.setText(res);
             }
         });
         botView.add(adbBtn, new FlowLayout(FlowLayout.LEFT));
@@ -83,8 +85,8 @@ public class ADBView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //
-                System.out.println("重置ADB");
-
+                Adb.setAdbPathRest();
+                msgADBJl.setText("重置ADB完成");
             }
         });
         botView.add(adbRestBtn, new FlowLayout(FlowLayout.LEFT));

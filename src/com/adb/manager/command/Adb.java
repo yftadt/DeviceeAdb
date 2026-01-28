@@ -37,13 +37,51 @@ public class Adb extends CmdBase {
     private static boolean isInstallAdb = true;
 
     private static String getAdbPath() {
-        if (isInstallAdb) {
-            return "";
+        String path = "";
+        if (adbPathExternal != null && adbPathExternal.length() > 0) {
+            path = adbPathExternal;
         }
-        String path = System.getProperty("user.dir");
-        path += "/adb/";
-        System.out.println(path);
+        if (path.isEmpty() && isInstallAdb) {
+            path = "";
+        }
+        if (path.isEmpty() && !isInstallAdb) {
+            path = System.getProperty("user.dir");
+            path += "/adb/";
+        }
+        System.out.println("adb path:" + path);
         return path;
+    }
+
+    //外部的adb
+    private static String adbPathExternal = "";
+
+    //设置 adb 路径
+    public static String setAdbPath(String path) {
+        String str = "";
+        try {
+            File file = new File(path);
+            if (file.exists()) {
+                if (file.isFile()) {
+                    adbPathExternal = file.getParent();
+                } else {
+                    adbPathExternal = file.getPath();
+                }
+                if (!adbPathExternal.endsWith("/")) {
+                    adbPathExternal += "/";
+                }
+                str = "设置成功：" + adbPathExternal;
+            } else {
+                str = "设置失败：不存在/不是文件";
+            }
+
+        } catch (Exception e) {
+            str = "设置失败：" + e.getMessage();
+        }
+        return str;
+    }
+
+    public static void setAdbPathRest() {
+        adbPathExternal = "";
     }
 
     private static Adb adb = new Adb();
