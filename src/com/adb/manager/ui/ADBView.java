@@ -1,8 +1,11 @@
 package com.adb.manager.ui;
 
+import com.adb.bean.DevData;
 import com.adb.listener.DevAdbListener;
+import com.adb.manager.AdbWindow;
 import com.adb.manager.command.Adb;
 import com.adb.manager.command.DevManager;
+import com.utile.FileUtile;
 import com.view.JPanelFixed;
 import com.view.Views;
 
@@ -49,6 +52,9 @@ public class ADBView {
         panel.add(temp);
     }
 
+    //ADB 输入框
+    private JTextField adbET;
+
     private void setBotUi(JPanel panel) {
         //
         JPanel botView = new JPanel(new GridLayout(4, 1));//3行 1列
@@ -62,7 +68,7 @@ public class ADBView {
         adbPathJP.setLayout(new FlowLayout(FlowLayout.LEFT));
         botView.add(adbPathJP, new FlowLayout(FlowLayout.LEFT));
         //ADB 输入框
-        JTextField adbET = new JTextField();
+        adbET = new JTextField();
         adbET.setSize(200, 25);
         adbET.setColumns(10);
         botView.add(adbET, new FlowLayout(FlowLayout.LEFT));
@@ -76,6 +82,10 @@ public class ADBView {
                 System.out.println("新的ADB->" + adbPath);
                 String res = Adb.setAdbPath(adbPath);
                 msgADBJl.setText(res);
+                //
+                data.adbPath = adbPath;
+                boolean isSave = FileUtile.saveObj(data, AdbWindow.keyName);
+                System.out.println("保存数据成功？" + isSave);
             }
         });
         botView.add(adbBtn, new FlowLayout(FlowLayout.LEFT));
@@ -101,5 +111,13 @@ public class ADBView {
         setMiddleUi(panel);
         setBotUi(panel);
         return panel;
+    }
+
+    private DevData data;
+
+    //设置数据
+    public void setData(DevData data) {
+        this.data = data;
+        adbET.setText(data.adbPath);
     }
 }

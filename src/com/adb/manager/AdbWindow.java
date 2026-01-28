@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class AdbWindow {
     private JFrame rootView;
-    private String keyName = "sign_file_data";
+    public static String keyName = "sign_file_data";
 
     public void initView() {
 
@@ -44,7 +44,7 @@ public class AdbWindow {
         //右侧布局
         rootView.add(BorderLayout.EAST, getDevicesUi());
         //
-        ADBView adbView=   new ADBView();
+        ADBView adbView = new ADBView();
         rootView.add(BorderLayout.WEST, adbView.getADBUi());
         //
         rootView.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -54,11 +54,15 @@ public class AdbWindow {
         //读取数据
         Object bean = FileUtile.getObj(keyName);
         if (bean != null) {
-            DevData devData = (DevData) bean;
-            ipET.setText(devData.ipAddr);
+            devData = (DevData) bean;
+        } else {
+            devData = new DevData();
         }
+        ipET.setText(devData.ipAddr);
+        adbView.setData(devData);
     }
 
+    private DevData devData;
 
     //中间
     //添加选中的ui
@@ -214,7 +218,6 @@ public class AdbWindow {
     }
 
 
-
     //IP 输入框
     private JTextField ipET;
     //端口号 输入框
@@ -252,7 +255,6 @@ public class AdbWindow {
                     dialogShow(2, "请输入手机上的端口号");
                 }
                 //
-                DevData devData = new DevData();
                 devData.ipAddr = ips;
                 boolean isSave = FileUtile.saveObj(devData, keyName);
                 System.out.println("保存数据成功？" + isSave);
