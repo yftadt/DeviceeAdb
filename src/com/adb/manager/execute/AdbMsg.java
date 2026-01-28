@@ -1,22 +1,22 @@
 package com.adb.manager.execute;
 
+import com.adb.listener.DevAdbListener;
 import com.adb.manager.command.Adb;
 import com.cmd.CmdBase;
-import com.adb.listener.DevAdbListener;
 
 import javax.swing.*;
 
-//运行或者停止设备
-public class AdbStop extends SwingWorker {
+//获取ADB 信息
+public class AdbMsg extends SwingWorker {
     private DevAdbListener listener;
 
-    public AdbStop(DevAdbListener listener) {
+    public AdbMsg(DevAdbListener listener) {
         this.listener = listener;
     }
 
     @Override
     protected Object doInBackground() throws Exception {
-        Adb.getInstance().onAdbStop(new CmdBase.OnCmdBack() {
+        Adb.getInstance().onAdbMsg(new CmdBase.OnCmdBack() {
 
             @Override
             public void onCmdState(int state, String res) {

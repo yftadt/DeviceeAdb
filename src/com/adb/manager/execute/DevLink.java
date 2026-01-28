@@ -24,8 +24,14 @@ public class DevLink extends SwingWorker {
     protected Integer doInBackground() {
         Adb.getInstance().onDevConnectWifi(ip, port, new CmdBase.OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult 链接情况：" + state + " " + res);
+            public void onCmdState(int state, String res) {
+                System.out.println("结果回调1 " + state + " " + res);
+
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
+                System.out.println("结果回调2 " + state + " " + res);
                 if (res != null && res.contains("connected")) {
                     isConnected = true;
                 }

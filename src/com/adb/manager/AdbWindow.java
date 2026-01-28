@@ -10,6 +10,7 @@ import com.adb.item.ui.DevItemUi;
 import com.adb.item.ui.CellRenderer;
 import com.adb.manager.command.Adb;
 import com.adb.manager.command.DevManager;
+import com.adb.manager.view.ADBView;
 import com.utile.FileUtile;
 import com.utile.IPS;
 import com.view.JPanelFixed;
@@ -42,6 +43,10 @@ public class AdbWindow {
         rootView.add(BorderLayout.CENTER, getSelectUi());
         //右侧布局
         rootView.add(BorderLayout.EAST, getDevicesUi());
+        //
+        ADBView adbView=   new ADBView();
+        rootView.add(BorderLayout.WEST, adbView.getADBUi());
+        //
         rootView.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //
         rootView.setVisible(true);
@@ -93,7 +98,7 @@ public class AdbWindow {
 
     //右侧ui
     private JPanel getDevicesUi() {
-        JPanel panel = new JPanelFixed(300, new BorderLayout());
+        JPanel panel = new JPanelFixed(180, new BorderLayout());
         panel.add(BorderLayout.NORTH, getConnectUi());
         panel.add(BorderLayout.SOUTH, getDevWifiUi());
         return panel;
@@ -207,6 +212,8 @@ public class AdbWindow {
         view.setBorder(BorderFactory.createEmptyBorder(10, 2, 10, 2));
         return view;
     }
+
+
 
     //IP 输入框
     private JTextField ipET;

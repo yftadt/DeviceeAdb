@@ -19,8 +19,14 @@ public class AdbStart extends SwingWorker {
         Adb.getInstance().onAdbStart(new CmdBase.OnCmdBack() {
 
             @Override
-            public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult结果 " + state + " " + res);
+            public void onCmdState(int state, String res) {
+                System.out.println("结果回调1 " + state + " " + res);
+                listener.onMsgBack(String.valueOf(state), res, null);
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
+                System.out.println("结果回调2 " + state + " " + res);
                 listener.onMsgBack(String.valueOf(state), res, null);
             }
         });

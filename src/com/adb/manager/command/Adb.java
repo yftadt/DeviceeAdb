@@ -12,7 +12,12 @@ public class Adb extends CmdBase {
     public void test() {
         getDevices(new OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
+            public void onCmdState(int state, String res) {
+
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
 
             }
         });
@@ -51,12 +56,7 @@ public class Adb extends CmdBase {
     public void getDevices(OnCmdBack onCmdBack) {
         //设备
         String cmd = getAdbPath() + "adb devices";
-        onRunCmd(cmd, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd, onCmdBack);
     }
 
     //0 运行正常 1 设备不存在
@@ -65,12 +65,7 @@ public class Adb extends CmdBase {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         String cmd2 = getAdbPath() + "input swipe 250 250 250 -900";
         String cmd3 = cmd + " " + cmd2;
-        onRunCmd(cmd3, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd3, onCmdBack);
     }
 
     /**
@@ -84,12 +79,7 @@ public class Adb extends CmdBase {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         String cmd2 = getAdbPath() + "shell input tap " + x + " " + y;
         String cmd3 = cmd + " " + cmd2;
-        onRunCmd(cmd3, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd3, onCmdBack);
     }
 
     /**
@@ -103,12 +93,7 @@ public class Adb extends CmdBase {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         String cmd2 = getAdbPath() + "shell input keyevent KEYCODE_BACK";
         String cmd3 = cmd + " " + cmd2;
-        onRunCmd(cmd3, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd3, onCmdBack);
     }
 
     /**
@@ -122,12 +107,7 @@ public class Adb extends CmdBase {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         String cmd2 = getAdbPath() + "shell  dumpsys window | findstr mCurrentFocus";
         String cmd3 = cmd + " " + cmd2;
-        onRunCmd(cmd3, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd3, onCmdBack);
     }
 
     /**
@@ -141,12 +121,7 @@ public class Adb extends CmdBase {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         String cmd2 = getAdbPath() + "shell  logcat -v time" + " " + file.getPath();
         String cmd3 = cmd + " " + cmd2;
-        onRunCmd(cmd3, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd3, onCmdBack);
     }
 
 
@@ -159,7 +134,12 @@ public class Adb extends CmdBase {
         String cmd = getAdbPath() + "adb -s " + devName + " tcpip " + devPort;
         onRunCmd(cmd, new OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
+            public void onCmdState(int state, String res) {
+
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
                 //端口号设置成功
                 if (res != null && res.contains("restarting")) {
                     statePort = 0;
@@ -182,12 +162,7 @@ public class Adb extends CmdBase {
     //使用IP、端口号  方式链接
     public void onDevConnectWifi(String ip, String devPort, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb connect " + ip + ":" + devPort;
-        onRunCmd(cmd, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd, onCmdBack);
 
     }
     //adb shell am force-stop xxxxxx
@@ -199,36 +174,24 @@ public class Adb extends CmdBase {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         String cmd2 = getAdbPath() + "pm list package";
         String cmd3 = cmd + " " + cmd2;
-        onRunCmd(cmd3, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                if (onCmdBack != null) {
-                    onCmdBack.onCmdResult(state, res);
-                }
-            }
-        });
+        onRunCmd(cmd3, onCmdBack);
     }
 
     public void onAdbStop(OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb kill-server";
-        onRunCmd(cmd, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd, onCmdBack);
 
     }
 
     public void onAdbStart(OnCmdBack onCmdBack) {
-        final int[] stateTemp = {-1};
         String cmd = getAdbPath() + "adb start-server";
-        onRunCmd(cmd, new OnCmdBack() {
-            @Override
-            public void onCmdResult(int state, String res) {
-                onCmdBack.onCmdResult(state, res);
-            }
-        });
+        onRunCmd(cmd, onCmdBack);
+
+    }
+
+    public void onAdbMsg(OnCmdBack onCmdBack) {
+        String cmd = getAdbPath() + "adb version";
+        onRunCmd(cmd, onCmdBack);
 
     }
 }

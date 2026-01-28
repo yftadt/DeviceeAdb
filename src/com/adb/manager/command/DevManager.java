@@ -55,4 +55,9 @@ public class DevManager {
     public void adbStart(DevAdbListener listener) {
         new AdbStart(listener).execute();
     }
+    public void adbMsg(DevAdbListener listener) {
+        new AdbMsg(listener).execute();
+    }
+
+
 }

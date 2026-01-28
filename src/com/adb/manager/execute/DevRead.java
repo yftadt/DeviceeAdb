@@ -22,13 +22,16 @@ public class DevRead extends SwingWorker {
         ArrayList<String> devs = new ArrayList<>();
         Adb.getInstance().getDevices(new CmdBase.OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult 获取链接的设备：state=" + state + " res=" + res);
+            public void onCmdState(int state, String res) {
+                System.out.println("结果回调1 " + state + " " + res);
+                listener.onMsgBack(String.valueOf(state), res, null);
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
+                System.out.println("结果回调2 " + state + " " + res);
                 listener.onMsgBack(String.valueOf(state), res, null);
                 if (res.contains("不是内部或外部命令")) {
-                    return;
-                }
-                if (Adb.isAdbCode(state)) {
                     return;
                 }
                 if (res.contains("offline")) {

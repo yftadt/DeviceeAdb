@@ -85,8 +85,14 @@ public class DevRun extends SwingWorker {
     private void setDevRun(ItemBaen dev) {
         Adb.getInstance().onDevicesRun(dev.name, new CmdBase.OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult 运行结果：" + state + " :" + res);
+            public void onCmdState(int state, String res) {
+                System.out.println("结果回调1：" + state + " :" + res);
+
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
+                System.out.println("结果回调2：" + state + " :" + res);
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
@@ -98,8 +104,13 @@ public class DevRun extends SwingWorker {
     private void setDevRunClick(ItemBaen dev) {
         Adb.getInstance().onDevicesRunClick(dev.name, dev.x, dev.y, new CmdBase.OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult 运行：" + state + " :" + res);
+            public void onCmdState(int state, String res) {
+                System.out.println("结果回调1：" + state + " :" + res);
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
+                System.out.println("结果回调2：" + state + " :" + res);
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
@@ -113,8 +124,14 @@ public class DevRun extends SwingWorker {
     private void setDevRunBack(ItemBaen dev) {
         Adb.getInstance().onDevicesRunBack(dev.name, new CmdBase.OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult 运行：" + state + " :" + res);
+            public void onCmdState(int state, String res) {
+                System.out.println("结果回调1：" + state + " :" + res);
+
+            }
+
+            @Override
+            public void onCmdMsg(int state, String res) {
+                System.out.println("结果回调2：" + state + " :" + res);
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
@@ -128,8 +145,13 @@ public class DevRun extends SwingWorker {
     private void setDevRunActTop(ItemBaen dev) {
         Adb.getInstance().onDevicesRunTopAct(dev.name, new CmdBase.OnCmdBack() {
             @Override
-            public void onCmdResult(int state, String res) {
-                System.out.println("onCmdResult 运行：" + state + " :" + res);
+            public void onCmdState(int state, String res) {
+                System.out.println("结果回调1 " + state + " " + res);
+
+            }
+            @Override
+            public void onCmdMsg(int state, String res) {
+                System.out.println("结果回调2 " + state + " " + res);
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
