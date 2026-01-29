@@ -1,3 +1,6 @@
 Manifest-Version: 1.0
-com.main.Main-Class: com.main.Main
+Main-Class: com.main.AppMain
+Class-Path: javaws.jar rt.jar jce.jar jfr.jar management-agent.jar plugi
+ n.jar resources.jar charsets.jar deploy.jar jfxswt.jar jsse.jar junit-4
+ .13.1.jar hamcrest-core-1.3.jar
 

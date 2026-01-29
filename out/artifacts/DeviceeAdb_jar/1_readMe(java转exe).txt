@@ -1,4 +1,5 @@
 https://blog.csdn.net/qq_43461350/article/details/144187030
+java -jar D:\android_pros\java\github\DeviceeAdb\out\artifacts\DeviceeAdb_jar\DeviceeAdb.jar
 使用exe4j  可以是jar转为可执行程序
 1.jre必须是32位定位，且版本号最高为1.8。为对应jre，本项目设置sdk版本是 1.8.0_151
 2.jar编译版本（sdk版本）必须对应jre版本，即1.8

@@ -1,6 +1,5 @@
 package com.test;
 
-import org.junit.Test;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -25,7 +24,7 @@ public class Calculator extends JFrame implements ActionListener {
     boolean operateValidFlag = true;//判断除数是否为0
     double resultNum = 0.0;//可以暂存目前的最终结果
 
-    @Test
+
     public void test() {
         JFrame frame = new Calculator();
         frame.setVisible(true);

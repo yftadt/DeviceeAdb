@@ -34,7 +34,7 @@ public class Adb extends CmdBase {
     }
 
     //true 计算机已经配置好了adb
-    private static boolean isInstallAdb = true;
+    private static boolean isInstallAdb = false;
 
     private static String getAdbPath() {
         String path = "";
