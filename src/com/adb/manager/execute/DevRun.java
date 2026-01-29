@@ -86,13 +86,13 @@ public class DevRun extends SwingWorker {
         Adb.getInstance().onDevicesRun(dev.name, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdState(int state, String res) {
-                System.out.println("结果回调1：" + state + " :" + res);
+                System.out.println("setDevRun结果回调1：" + state + " :" + res);
 
             }
 
             @Override
             public void onCmdMsg(int state, String res) {
-                System.out.println("结果回调2：" + state + " :" + res);
+                System.out.println("setDevRun结果回调2：" + state + " :" + res);
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);

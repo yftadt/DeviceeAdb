@@ -34,7 +34,7 @@ public class Adb extends CmdBase {
     }
 
     //true 计算机已经配置好了adb
-    private static boolean isInstallAdb = false;
+    public static boolean isInstallAdb = false;
 
     private static String getAdbPath() {
         String path = "";
@@ -101,7 +101,8 @@ public class Adb extends CmdBase {
     //滑动屏幕
     public void onDevicesRun(String devName, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
-        String cmd2 = getAdbPath() + "input swipe 250 250 250 -900";
+        //是连接命令 不用在设置 getAdbPath()
+        String cmd2 = "input swipe 250 250 250 -900";
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -115,7 +116,8 @@ public class Adb extends CmdBase {
      */
     public void onDevicesRunClick(String devName, int x, int y, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
-        String cmd2 = getAdbPath() + "shell input tap " + x + " " + y;
+        //是连接命令 不用在设置 getAdbPath()
+        String cmd2 = "shell input tap " + x + " " + y;
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -129,7 +131,8 @@ public class Adb extends CmdBase {
      */
     public void onDevicesRunBack(String devName, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
-        String cmd2 = getAdbPath() + "shell input keyevent KEYCODE_BACK";
+        //是连接命令 不用在设置 getAdbPath()
+        String cmd2 = "shell input keyevent KEYCODE_BACK";
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -143,7 +146,8 @@ public class Adb extends CmdBase {
      */
     public void onDevicesRunTopAct(String devName, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
-        String cmd2 = getAdbPath() + "shell  dumpsys window | findstr mCurrentFocus";
+        //是连接命令 不用在设置 getAdbPath()
+        String cmd2 =   "shell  dumpsys window | findstr mCurrentFocus";
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -157,7 +161,8 @@ public class Adb extends CmdBase {
      */
     public void onDevicesRunLog(String devName, OnCmdBack onCmdBack, File file) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
-        String cmd2 = getAdbPath() + "shell  logcat -v time" + " " + file.getPath();
+        //是连接命令 不用在设置 getAdbPath()
+        String cmd2 =  "shell  logcat -v time" + " " + file.getPath();
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -210,7 +215,8 @@ public class Adb extends CmdBase {
 
     public void onShowApp(String devName, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
-        String cmd2 = getAdbPath() + "pm list package";
+        //是连接命令 不用在设置 getAdbPath()
+        String cmd2 =   "pm list package";
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }

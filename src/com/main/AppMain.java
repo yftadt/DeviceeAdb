@@ -1,5 +1,6 @@
 package com.main;
 
+import com.adb.manager.command.Adb;
 import com.aes.manger.AESWindow;
 import com.adb.manager.AdbWindow;
 import com.test.Calculator;
@@ -14,7 +15,7 @@ public class AppMain {
 
     public static void main(String[] args) {
         //AESRunIng();
-         adbRunIng();
+        adbRunIng();
         //test12();
 
         //imgSetSize();
@@ -33,6 +34,7 @@ public class AppMain {
 
     //adb ；链接程序
     private static void adbRunIng() {
+        Adb.getInstance().isInstallAdb = true;
         new AdbWindow().initView();
     }
 
