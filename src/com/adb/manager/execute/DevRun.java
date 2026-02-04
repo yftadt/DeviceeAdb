@@ -8,14 +8,15 @@ import com.adb.listener.DevRunListener;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 //运行或者停止设备
 public class DevRun extends SwingWorker {
     //运行标签
     private boolean isRun = true;
     private DevRunListener devRunListener;
-    //延时
-    private int timeDelay = 60;//单位秒
+
+
 
     public DevRun(DevRunListener devRunListener) {
         this.devRunListener = devRunListener;
@@ -25,7 +26,14 @@ public class DevRun extends SwingWorker {
         isRun = false;
     }
 
-
+    //延时（获取随机数值） 单位秒
+    private int getTimeDelay() {
+        Random random = new Random();
+        int min = 1; // 最小值
+        int max = 5; // 最大值
+        int randomInt = random.nextInt(max - min + 1) + min;
+        return randomInt * 60;
+    }
     @Override
     protected Object doInBackground() throws Exception {
         ArrayList<ItemBaen> devs = devRunListener.getData();
@@ -33,7 +41,7 @@ public class DevRun extends SwingWorker {
             return 0;
         }
         while (devs.size() > 0) {
-            int timeTemp = timeDelay;
+            int timeTemp = getTimeDelay();
             for (int i = 0; i < devs.size(); i++) {
                 ItemBaen dev = devs.get(i);
                 dev.runType = 1;
@@ -149,6 +157,7 @@ public class DevRun extends SwingWorker {
                 System.out.println("结果回调1 " + state + " " + res);
 
             }
+
             @Override
             public void onCmdMsg(int state, String res) {
                 System.out.println("结果回调2 " + state + " " + res);
