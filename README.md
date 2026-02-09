@@ -55,5 +55,5 @@ netstat -ano | findstr "5038"  # Windows
 12.重新设置 adb 端口号第二种方法
 在环境变量里
 # 新增变量名 ANDROID_ADB_SERVER_PORT  变量值 9999
-
+最好选择一个5位数的端口号（10000 ~ 65535），不易重复。
  
