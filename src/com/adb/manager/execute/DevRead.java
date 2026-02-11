@@ -34,23 +34,26 @@ public class DevRead extends SwingWorker {
                 if (res.contains("不是内部或外部命令")) {
                     return;
                 }
-                if (res.contains("offline")) {
-                    //离线状态
-                    return;
-                }
                 //error: protocol fault (couldn't read status): connection reset
                 if (res.contains("error")) {
                     //发生错误
                     return;
                 }
+                //执行结果合并:  List of devices attached 31141JEHN14666 offline
+                // 10.168.201.13:42143 device adb-RRCX1066YVD-z51M5j._adb-tls-connect._tcp device
+                res = res.replace("List of devices attached", "");
+
+                if (res.contains("offline")) {
+                    //离线状态
+                    res = res.replace("offline", "_offline device");
+                }
                 if (res.contains("kill")) {
                     //被杀
-                    return;
+                    res = res.replace("kill", "_kill device");
                 }
                 //单一设备
                 //List of devices attached 10.168.5.143:40975 device
                 //List of devices attached RRCX1066YVD device
-                res = res.replace("List of devices attached", "");
                 String[] devices = res.split("device");
                 if (devices == null) {
                     return;

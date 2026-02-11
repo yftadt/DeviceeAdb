@@ -21,29 +21,23 @@ public class DevItemUi implements ListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object value,
                                                   int index, boolean isSelected,
                                                   boolean cellHasFocus) {
-
+        ItemBaen itemBaen = (ItemBaen) value;
         //
         JPanel jPanel = new JPanel();
         //设置宽度
-        jPanel.setPreferredSize(new Dimension(300, 40));
-
+        jPanel.setPreferredSize(new Dimension(300, 50));
         jPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        //
-        ItemBaen itemBaen = (ItemBaen) value;
         //
         JCheckBox box = new JCheckBox();
         box.setSelected(itemBaen.isSelect);
-        jPanel.add(box);
+        jPanel.add(box, FlowLayout.LEFT);
         //
         JTextField text = new JTextField();
-        //背景透明
-        text.setOpaque(false);
-        //去边框
-        text.setBorder(new EmptyBorder(0, 0, 0, 0));
+        text.setOpaque(false);//背景透明
+        text.setBorder(new EmptyBorder(0, 0, 0, 0)); //去边框
         jPanel.add(text);
         //
         text.setText(itemBaen.name);
-
         return jPanel;
     }
 
