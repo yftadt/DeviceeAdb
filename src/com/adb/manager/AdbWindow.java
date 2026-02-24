@@ -69,6 +69,7 @@ public class AdbWindow {
     public JPanel getSelectUi() {
         // 创建内容面包容器，指定使用 边界布局
         JPanel view = new JPanelMin(800, new BorderLayout());
+        JPanel btnView = new JPanel(new BorderLayout());
         runBtn = new JButton("开始运行");
         runBtn.addActionListener(new ActionListener() {
             @Override
@@ -77,7 +78,18 @@ public class AdbWindow {
                 onBtnClick(4, "点击运行runBtn");
             }
         });
-        view.add(BorderLayout.NORTH, runBtn);
+        btnView.add(BorderLayout.NORTH, runBtn);
+        //
+        adBtn = new JButton("ad运行");
+        adBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("runBtn");
+                onBtnClick(41, "点击运行adBtn");
+            }
+        });
+        btnView.add(BorderLayout.SOUTH, adBtn);
+        view.add(BorderLayout.NORTH, btnView);
         //已选中的设备
         RunModel runModel = new RunModel();
         devSelectJL = new JList(runModel);
@@ -231,10 +243,13 @@ public class AdbWindow {
     private ArrayList<ItemBaen> dataSelect = new ArrayList<>();
     //运行按钮
     private JButton runBtn;
+    //广告按钮
+    private JButton adBtn;
+
     //true 正在运行
     private boolean isDevRun;
     //true 运行出错，再次搜索 然后运行
-    private boolean isDevRunAgain;
+    private boolean isDevRunAgain, isADRunAgain;
     //提示选中的设置
     private JTextField hintJl;
     //最近选中的设备
@@ -330,6 +345,12 @@ public class AdbWindow {
                                 isDevRunAgain = false;
                                 onBtnClick(4, "点击运行runBtn");
                             }
+                            if (isADRunAgain) {
+                                msgJl.setText("ad再次运行...");
+                                System.out.println("再次运行...");
+                                isADRunAgain = false;
+                                onBtnClick(41, "点击运行adBtn");
+                            }
                         } else {
                             msgJl.setText("搜索失败...");
                         }
@@ -338,6 +359,10 @@ public class AdbWindow {
                 break;
             case 4:
                 //开始运行
+                int runType = DevManager.getInstance().getRunType();
+                if (isDevRun && runType != 1) {
+                    isDevRun = false;
+                }
                 isDevRun = !isDevRun;
                 if (isDevRun) {
                     DevManager.getInstance().devRun(new DevRunListener() {
@@ -351,18 +376,53 @@ public class AdbWindow {
                             msgJl.setText(msg);
                             if (!isRun && dev != null) {
                                 isDevRun = false;
+                                isADRunAgain = false;
                                 isDevRunAgain = true;
                                 onBtnClick(3, "获取已链接的设备");
                                 runBtn.setText("开始运行");
                             }
                         }
-                    });
+                    }, 1);
 
                 } else {
                     //停止运行
                     DevManager.getInstance().devRunStop();
                 }
+                adBtn.setText("ad开始运行");
                 runBtn.setText(isDevRun ? "运行停止" : "开始运行");
+                break;
+            case 41:
+                runType = DevManager.getInstance().getRunType();
+                if (isDevRun && !(runType == 2 || runType == 3 || runType == 4)) {
+                    isDevRun = false;
+                }
+                isDevRun = !isDevRun;
+                if (isDevRun) {
+                    DevManager.getInstance().devRun(new DevRunListener() {
+                        @Override
+                        public ArrayList<ItemBaen> getData() {
+                            return dataSelect;
+                        }
+
+                        @Override
+                        public void onUpdateUi(ItemBaen dev, boolean isRun, String msg) {
+                            msgJl.setText(msg);
+                            if (!isRun && dev != null) {
+                                isDevRun = false;
+                                isDevRunAgain = false;
+                                isADRunAgain = true;
+                                onBtnClick(3, "获取已链接的设备");
+                                adBtn.setText("ad开始运行");
+                            }
+                        }
+                    }, 2);
+
+                } else {
+                    //停止运行
+                    DevManager.getInstance().devRunStop();
+                }
+                runBtn.setText("开始运行");
+                adBtn.setText(isDevRun ? "ad运行停止" : "ad开始运行");
                 break;
             case 5:
                 //停止adb 服务

@@ -19,6 +19,7 @@ public class DevManager {
         return devManager;
     }
 
+
     //无线连接一个设备
     public void devLink(DevLinkListener devLinkListener, String ip, String port) {
         new DevLink(devLinkListener, ip, port).execute();
@@ -33,11 +34,21 @@ public class DevManager {
     private DevRun devRun;
 
     //开始运行
-    public void devRun(DevRunListener devRunListener) {
+    public void devRun(DevRunListener devRunListener, int runType) {
         if (devRun == null) {
             devRun = new DevRun(devRunListener);
+            devRun.setRunType(runType);
             devRun.execute();
+        } else {
+            devRun.setRunType(runType);
         }
+    }
+
+    public int getRunType() {
+        if (devRun == null) {
+            return -1;
+        }
+        return devRun.getRunType();
     }
 
     //停止运行
@@ -52,9 +63,11 @@ public class DevManager {
     public void adbStop(DevAdbListener listener) {
         new AdbStop(listener).execute();
     }
+
     public void adbStart(DevAdbListener listener) {
         new AdbStart(listener).execute();
     }
+
     public void adbMsg(DevAdbListener listener) {
         new AdbMsg(listener).execute();
     }

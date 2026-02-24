@@ -130,7 +130,7 @@ public class Adb extends CmdBase {
      * @param onCmdBack
      */
     public void onDevicesRunBack(String devName, OnCmdBack onCmdBack) {
-        String cmd = getAdbPath() + "adb -s " + devName + " shell";
+        String cmd = getAdbPath() + "adb -s " + devName + " ";
         //是连接命令 不用在设置 getAdbPath()
         String cmd2 = "shell input keyevent KEYCODE_BACK";
         String cmd3 = cmd + " " + cmd2;
@@ -145,7 +145,7 @@ public class Adb extends CmdBase {
      * @param onCmdBack
      */
     public void onDevicesRunTopAct(String devName, OnCmdBack onCmdBack) {
-        String cmd = getAdbPath() + "adb -s " + devName + " shell";
+        String cmd = getAdbPath() + "adb -s " + devName + " ";
         //是连接命令 不用在设置 getAdbPath()
         String cmd2 =   "shell  dumpsys window | findstr mCurrentFocus";
         String cmd3 = cmd + " " + cmd2;
