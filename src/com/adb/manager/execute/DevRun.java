@@ -16,8 +16,6 @@ public class DevRun extends SwingWorker {
     private boolean isRun = true;
     private DevRunListener devRunListener;
 
-
-
     public DevRun(DevRunListener devRunListener) {
         this.devRunListener = devRunListener;
     }
@@ -44,7 +42,7 @@ public class DevRun extends SwingWorker {
             int timeTemp = getTimeDelay();
             for (int i = 0; i < devs.size(); i++) {
                 ItemBaen dev = devs.get(i);
-                dev.runType = 1;
+                dev.runType = 2;
                 setRun(dev);
                 //setDevRun(dev);
             }
@@ -110,6 +108,8 @@ public class DevRun extends SwingWorker {
     }
 
     private void setDevRunClick(ItemBaen dev) {
+        dev.x=827;
+        dev.y=1610;
         Adb.getInstance().onDevicesRunClick(dev.name, dev.x, dev.y, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdState(int state, String res) {
@@ -122,8 +122,6 @@ public class DevRun extends SwingWorker {
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
-                } else {
-                    setRun(dev);
                 }
             }
         });
@@ -143,8 +141,6 @@ public class DevRun extends SwingWorker {
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
-                } else {
-                    setRun(dev);
                 }
             }
         });
@@ -164,8 +160,6 @@ public class DevRun extends SwingWorker {
                 //没有找到这台设备
                 if (res.contains("not found")) {
                     devRunListener.onUpdateUi(dev, false, res);
-                } else {
-                    setRun(dev);
                 }
             }
         });

@@ -56,4 +56,6 @@ netstat -ano | findstr "5038"  # Windows
 在环境变量里
 # 新增变量名 ANDROID_ADB_SERVER_PORT  变量值 9999
 最好选择一个5位数的端口号（10000 ~ 65535），不易重复。
- 
+
+滑动
+adb -s adb-RRCX1066YVD-z51M5j._adb-tls-connect._tcp shell input swipe 250 250 250 -900

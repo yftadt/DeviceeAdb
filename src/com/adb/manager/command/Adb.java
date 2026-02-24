@@ -115,7 +115,7 @@ public class Adb extends CmdBase {
      * @param onCmdBack
      */
     public void onDevicesRunClick(String devName, int x, int y, OnCmdBack onCmdBack) {
-        String cmd = getAdbPath() + "adb -s " + devName + " shell";
+        String cmd = getAdbPath() + "adb -s " + devName + " ";
         //是连接命令 不用在设置 getAdbPath()
         String cmd2 = "shell input tap " + x + " " + y;
         String cmd3 = cmd + " " + cmd2;
