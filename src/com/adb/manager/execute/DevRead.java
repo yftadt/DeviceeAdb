@@ -41,6 +41,7 @@ public class DevRead extends SwingWorker {
                 }
                 //执行结果合并:  List of devices attached 31141JEHN14666 offline
                 // 10.168.201.13:42143 device adb-RRCX1066YVD-z51M5j._adb-tls-connect._tcp device
+                // List of devices attached 31141JEHN14666 unauthorized adb-RRCX1066YVD-z51M5j._adb-tls-connect._tcp device
                 res = res.replace("List of devices attached", "");
 
                 if (res.contains("offline")) {
@@ -61,6 +62,15 @@ public class DevRead extends SwingWorker {
                 for (int i = 0; i < devices.length; i++) {
                     String dev = devices[i];
                     dev = dev.replace(" ", "");
+                    if(dev.contains("unauthorized")){
+                        //31141JEHN14666unauthorizedadb-RRCX1066YVD-z51M5j._adb-tls-connect._tcp
+                        String[] names= dev.split("unauthorized");
+                        if(names.length>=2){
+                            dev=names[1];
+                        }else {
+                            dev=names[0];
+                        }
+                    }
                     devs.add(dev);
                 }
             }
