@@ -1,9 +1,11 @@
 package com.adb.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by guom on 2019/12/19.
  */
-public class EventBean {
+public class EventBean implements Serializable {
     //x=538 y=2121
     public int videoBtnX, videoBtnY;//赚钱按钮
     //x=919 y=1592
@@ -23,7 +25,6 @@ public class EventBean {
     public int getRunCode(int adTimeSpace) {
         if (videoTime >= adTimeSpace && adNum > 0) {
             runCode = 2;
-            adNum -= 1;
         } else {
             runCode = 1;
         }
@@ -31,6 +32,11 @@ public class EventBean {
     }
 
     public void setRunCodeLast(int runCodeLast) {
+        if (runCodeLast == 2) {
+            videoTime = 0;
+            adNum -= 1;
+            System.out.println("这里adNum:" + adNum);
+        }
         this.runCodeLast = runCodeLast;
     }
 
