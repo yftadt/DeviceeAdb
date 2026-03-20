@@ -105,7 +105,7 @@ public class ADBView {
     }
 
     //获取ADB信息ui
-    public JPanel getADBUi() {
+    public JPanel getLeftUi() {
         JPanel panel = new JPanelFixed(180, new BorderLayout());
         setTopUi(panel);
         setMiddleUi(panel);

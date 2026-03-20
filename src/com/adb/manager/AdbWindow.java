@@ -43,9 +43,9 @@ public class AdbWindow {
         rootView.add(BorderLayout.CENTER, getSelectUi());
         //右侧布局
         rootView.add(BorderLayout.EAST, getDevicesUi());
-        //
+        //左侧布局
         ADBView adbView = new ADBView();
-        rootView.add(BorderLayout.WEST, adbView.getADBUi());
+        rootView.add(BorderLayout.WEST, adbView.getLeftUi());
         //
         rootView.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //
@@ -65,11 +65,18 @@ public class AdbWindow {
     private DevData devData;
 
     //中间
-    //添加选中的ui
     public JPanel getSelectUi() {
-        // 创建内容面包容器，指定使用 边界布局
-        JPanel view = new JPanelMin(800, new BorderLayout());
-        JPanel btnView = new JPanel(new BorderLayout());
+        JPanel panel = new JPanelFixed(800, new BorderLayout());
+        //上部分
+        panel.add(BorderLayout.NORTH, getConnectUp());
+        //下部分
+        panel.add(BorderLayout.CENTER, getConnectDown());
+        return panel;
+    }
+
+    //中间上Ui
+    public JPanel getConnectUp() {
+        final JPanel view = new JPanel(new GridLayout(2, 1));//6行 1列
         runBtn = new JButton("开始运行");
         runBtn.addActionListener(new ActionListener() {
             @Override
@@ -78,7 +85,8 @@ public class AdbWindow {
                 onBtnClick(4, "点击运行runBtn");
             }
         });
-        btnView.add(BorderLayout.NORTH, runBtn);
+        view.add(runBtn, new FlowLayout(FlowLayout.LEFT));
+
         //
         adBtn = new JButton("ad运行");
         adBtn.addActionListener(new ActionListener() {
@@ -88,8 +96,13 @@ public class AdbWindow {
                 onBtnClick(41, "点击运行adBtn");
             }
         });
-        btnView.add(BorderLayout.SOUTH, adBtn);
-        view.add(BorderLayout.NORTH, btnView);
+        view.add(adBtn, new FlowLayout(FlowLayout.LEFT));
+        return view;
+    }
+
+    //中间下UI
+    public JPanel getConnectDown() {
+        JPanel view = new JPanel(new BorderLayout());
         //已选中的设备
         RunModel runModel = new RunModel();
         devSelectJL = new JList(runModel);
@@ -99,7 +112,7 @@ public class AdbWindow {
         JScrollPane layoutSP2 = new JScrollPane(devSelectJL);
         layoutSP2.setPreferredSize(new Dimension(100, 200));
         view.add(BorderLayout.CENTER, layoutSP2);
-        //
+        //提示消息
         JPanel msgJP = new JPanel();
         msgJl = new JLabel();
         msgJl.setSize(10, 1000);
@@ -112,17 +125,20 @@ public class AdbWindow {
         return view;
     }
 
+
     //右侧ui
     private JPanel getDevicesUi() {
         JPanel panel = new JPanelFixed(180, new BorderLayout());
-        panel.add(BorderLayout.NORTH, getConnectUi());
-        panel.add(BorderLayout.SOUTH, getDevWifiUi());
+        //上部分
+        panel.add(BorderLayout.NORTH, getRightUp());
+        //下部分
+        panel.add(BorderLayout.SOUTH, getRightDown());
         return panel;
     }
 
 
     //运行btn，获取已链接的设备ui，消息
-    private JPanel getConnectUi() {
+    private JPanel getRightUp() {
         //  创建内容面包容器，指定使用 边界布局
         JPanel view = new JPanel(new BorderLayout());
         JButton searchBtn = new JButton("获取设备");
@@ -160,7 +176,7 @@ public class AdbWindow {
     }
 
     //设置端口号，wifi 链接
-    private JPanel getDevWifiUi() {
+    private JPanel getRightDown() {
         final JPanel view = new JPanel(new GridLayout(7, 1));//6行 1列
         //提示UI
         hintJl = new JTextField();
