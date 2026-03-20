@@ -44,6 +44,19 @@ public class DevManager {
         }
     }
 
+    public DevRunAuto devRunAuto;
+
+    public void devRunAuto(DevRunListener devRunListener) {
+        if (devRunAuto == null) {
+            devRunAuto = new DevRunAuto(devRunListener);
+            devRunAuto.setRunType(100);
+            devRunAuto.execute();
+        } else {
+            devRunAuto.setRunType(100);
+        }
+    }
+
+
     public int getRunType() {
         if (devRun == null) {
             return -1;
@@ -51,13 +64,25 @@ public class DevManager {
         return devRun.getRunType();
     }
 
+    public int getRunAutoType() {
+        if (devRunAuto == null) {
+            return -1;
+        }
+        return devRunAuto.getRunType();
+    }
+
     //停止运行
     public void devRunStop() {
-        if (devRun == null) {
-            return;
+        if (devRun != null) {
+            devRun.setStop();
+            devRun = null;
         }
-        devRun.setStop();
-        devRun = null;
+
+        if (devRunAuto != null) {
+            devRunAuto.setStop();
+            devRunAuto = null;
+        }
+
     }
 
     public void adbStop(DevAdbListener listener) {

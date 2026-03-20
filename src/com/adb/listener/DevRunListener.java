@@ -1,5 +1,6 @@
 package com.adb.listener;
 
+import com.adb.bean.EventBean;
 import com.adb.bean.ItemBaen;
 
 import java.util.ArrayList;
@@ -10,4 +11,7 @@ public interface DevRunListener {
 
     void onUpdateUi(ItemBaen itemBaen, boolean isRun, String msg);
 
+    default EventBean getEventData() {
+        return null;
+    }
 }

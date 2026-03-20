@@ -1,6 +1,7 @@
 package com.adb.manager;
 
 import com.adb.bean.DevData;
+import com.adb.bean.EventBean;
 import com.adb.item.adapter.DevModel;
 import com.adb.item.adapter.DevModelClick;
 import com.adb.item.adapter.RunModel;
@@ -40,9 +41,9 @@ public class AdbWindow {
         rootView.setLayout(new BorderLayout());
         //
         //中间布局
-        rootView.add(BorderLayout.CENTER, getSelectUi());
+        rootView.add(BorderLayout.CENTER, getConnectUi());
         //右侧布局
-        rootView.add(BorderLayout.EAST, getDevicesUi());
+        rootView.add(BorderLayout.EAST, getRightUi());
         //左侧布局
         ADBView adbView = new ADBView();
         rootView.add(BorderLayout.WEST, adbView.getLeftUi());
@@ -65,7 +66,7 @@ public class AdbWindow {
     private DevData devData;
 
     //中间
-    public JPanel getSelectUi() {
+    public JPanel getConnectUi() {
         JPanel panel = new JPanelFixed(800, new BorderLayout());
         //上部分
         panel.add(BorderLayout.NORTH, getConnectUp());
@@ -76,7 +77,7 @@ public class AdbWindow {
 
     //中间上Ui
     public JPanel getConnectUp() {
-        final JPanel view = new JPanel(new GridLayout(2, 1));//6行 1列
+        final JPanel view = new JPanel(new GridLayout(3, 1));//6行 1列
         runBtn = new JButton("开始运行");
         runBtn.addActionListener(new ActionListener() {
             @Override
@@ -86,7 +87,6 @@ public class AdbWindow {
             }
         });
         view.add(runBtn, new FlowLayout(FlowLayout.LEFT));
-
         //
         adBtn = new JButton("ad运行");
         adBtn.addActionListener(new ActionListener() {
@@ -97,6 +97,16 @@ public class AdbWindow {
             }
         });
         view.add(adBtn, new FlowLayout(FlowLayout.LEFT));
+        //自动化
+        autoBtn = new JButton("自动化（先视频，后AD）远行");
+        autoBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("runBtn 自动化");
+                onBtnClick(42, "点击运行 自动化（先视频，后AD）");
+            }
+        });
+        view.add(autoBtn, new FlowLayout(FlowLayout.LEFT));
         return view;
     }
 
@@ -127,7 +137,7 @@ public class AdbWindow {
 
 
     //右侧ui
-    private JPanel getDevicesUi() {
+    private JPanel getRightUi() {
         JPanel panel = new JPanelFixed(180, new BorderLayout());
         //上部分
         panel.add(BorderLayout.NORTH, getRightUp());
@@ -261,7 +271,8 @@ public class AdbWindow {
     private JButton runBtn;
     //广告按钮
     private JButton adBtn;
-
+    //自动化按钮
+    private JButton autoBtn;
     //true 正在运行
     private boolean isDevRun;
     //true 运行出错，再次搜索 然后运行
@@ -408,6 +419,7 @@ public class AdbWindow {
                 runBtn.setText(isDevRun ? "运行停止" : "开始运行");
                 break;
             case 41:
+                //-1 停止运行，1 上下动，2 点击，3 返回，4 获取最上面的acy名称
                 runType = DevManager.getInstance().getRunType();
                 if (isDevRun && !(runType == 2 || runType == 3 || runType == 4)) {
                     isDevRun = false;
@@ -439,6 +451,64 @@ public class AdbWindow {
                 }
                 runBtn.setText("开始运行");
                 adBtn.setText(isDevRun ? "ad运行停止" : "ad开始运行");
+                break;
+            case 42:
+                //-1 停止运行，1 上下动，2 点击，3 返回，4 获取最上面的acy名称
+                runType = DevManager.getInstance().getRunAutoType();
+                if (isDevRun && !(runType == 100)) {
+                    isDevRun = false;
+                }
+                isDevRun = !isDevRun;
+                if (isDevRun) {
+                    DevManager.getInstance().devRunAuto(new DevRunListener() {
+                        @Override
+                        public ArrayList<ItemBaen> getData() {
+                            return dataSelect;
+                        }
+
+                        @Override
+                        public void onUpdateUi(ItemBaen dev, boolean isRun, String msg) {
+                            msgJl.setText(msg);
+                            if (!isRun && dev != null) {
+                                isDevRun = false;
+                                isDevRunAgain = false;
+                                isADRunAgain = true;
+                                onBtnClick(3, "获取已链接的设备");
+                                autoBtn.setText("自动化（先视频，后AD）运行");
+                            }
+                        }
+
+                        private EventBean eventBean;
+
+                        @Override
+                        public EventBean getEventData() {
+                            if (eventBean == null) {
+                                eventBean = new EventBean();
+                                //赚钱按钮
+                                eventBean.videoBtnX = 538;
+                                eventBean.videoBtnY = 2121;
+                                //活动按钮
+                                eventBean.actBtnX = 919;
+                                eventBean.actBtnY = 1592;
+                                //任务按钮
+                                eventBean.taskBtnX = 517;
+                                eventBean.taskBtnY = 2013;
+                                //广告按钮
+                                eventBean.adBtnX = 849;
+                                eventBean.getAdBtnY = 1607;
+                                //广告次数
+                                eventBean.adNum = 20;
+                            }
+                            return eventBean;
+                        }
+                    });
+                } else {
+                    //停止运行
+                    DevManager.getInstance().devRunStop();
+                }
+                runBtn.setText("开始运行");
+                adBtn.setText("ad开始运行");
+                autoBtn.setText(isDevRun ? "自动化（先视频，后AD）停止" : "自动化（先视频，后AD）运行");
                 break;
             case 5:
                 //停止adb 服务
