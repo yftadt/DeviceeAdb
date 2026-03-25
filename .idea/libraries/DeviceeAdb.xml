@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="DeviceeAdb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/DeviceeAdb_jar/DeviceeAdb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

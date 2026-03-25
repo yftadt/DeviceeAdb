@@ -132,7 +132,7 @@ public class DevRunAuto extends SwingWorker {
                             runTimeDelay(5);
                             //
                             if (evenData.dataType == 2) {
-                                setDevRun(dev, "250 250 250 100");
+                                setDevRun(dev, "250 250 250 1000");
                                 runTimeDelay(5);
                             }
                             //
