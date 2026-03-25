@@ -89,7 +89,7 @@ public class AdbWindow {
         });
         view.add(runBtn, new FlowLayout(FlowLayout.LEFT));
         //
-        adBtn = new JButton("ad运行");
+        adBtn = new JButton("XAXD运行");
         adBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,12 +99,12 @@ public class AdbWindow {
         });
         view.add(adBtn, new FlowLayout(FlowLayout.LEFT));
         //自动化
-        autoBtn = new JButton("自动化（先视频，后AD）远行");
+        autoBtn = new JButton("自动化（先--，后XAXD）远行");
         autoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("runBtn 自动化");
-                onBtnClick(42, "点击运行 自动化（先视频，后AD）");
+                onBtnClick(42, "点击运行 自动化（先--，后XAXD）");
             }
         });
         view.add(autoBtn, new FlowLayout(FlowLayout.LEFT));
@@ -441,7 +441,7 @@ public class AdbWindow {
                                 isDevRunAgain = false;
                                 isADRunAgain = true;
                                 onBtnClick(3, "获取已链接的设备");
-                                adBtn.setText("ad开始运行");
+                                adBtn.setText("XAXD开始运行");
                             }
                         }
                     }, 2);
@@ -451,7 +451,7 @@ public class AdbWindow {
                     DevManager.getInstance().devRunStop();
                 }
                 runBtn.setText("开始运行");
-                adBtn.setText(isDevRun ? "ad运行停止" : "ad开始运行");
+                adBtn.setText(isDevRun ? "XAXD运行停止" : "XAXD开始运行");
                 break;
             case 42:
                 //-1 停止运行，1 上下动，2 点击，3 返回，4 获取最上面的acy名称
@@ -475,7 +475,7 @@ public class AdbWindow {
                                 isDevRunAgain = false;
                                 isADRunAgain = true;
                                 onBtnClick(3, "获取已链接的设备");
-                                autoBtn.setText("自动化（先视频，后AD）运行");
+                                autoBtn.setText("自动化（先--，后XAXD）运行");
                             }
                         }
 
@@ -514,8 +514,8 @@ public class AdbWindow {
                     DevManager.getInstance().devRunStop();
                 }
                 runBtn.setText("开始运行");
-                adBtn.setText("ad开始运行");
-                autoBtn.setText(isDevRun ? "自动化（先视频，后AD）停止" : "自动化（先视频，后AD）运行");
+                adBtn.setText("XAXD开始运行");
+                autoBtn.setText(isDevRun ? "自动化（先--，后XAXD）停止" : "自动化（先--，后XAXD）运行");
                 break;
             case 5:
                 //停止adb 服务

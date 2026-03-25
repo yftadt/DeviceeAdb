@@ -100,9 +100,16 @@ public class Adb extends CmdBase {
     //0 运行正常 1 设备不存在
     //滑动屏幕
     public void onDevicesRun(String devName, OnCmdBack onCmdBack) {
+        onDevicesRun(devName, 250, 250, 250, -900, onCmdBack);
+    }
+
+    //0 运行正常 1 设备不存在
+    //滑动屏幕
+    public void onDevicesRun(String devName, int startX, int startY, int endX, int endY,
+                             OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         //是连接命令 不用在设置 getAdbPath()
-        String cmd2 = "input swipe 250 250 250 -900";
+        String cmd2 = "input swipe " + startX + " " + startY + " " + endX + " " + endY;
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -147,7 +154,7 @@ public class Adb extends CmdBase {
     public void onDevicesRunTopAct(String devName, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " ";
         //是连接命令 不用在设置 getAdbPath()
-        String cmd2 =   "shell  dumpsys window | findstr mCurrentFocus";
+        String cmd2 = "shell  dumpsys window | findstr mCurrentFocus";
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -162,7 +169,7 @@ public class Adb extends CmdBase {
     public void onDevicesRunLog(String devName, OnCmdBack onCmdBack, File file) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         //是连接命令 不用在设置 getAdbPath()
-        String cmd2 =  "shell  logcat -v time" + " " + file.getPath();
+        String cmd2 = "shell  logcat -v time" + " " + file.getPath();
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }
@@ -216,7 +223,7 @@ public class Adb extends CmdBase {
     public void onShowApp(String devName, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         //是连接命令 不用在设置 getAdbPath()
-        String cmd2 =   "pm list package";
+        String cmd2 = "pm list package";
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }

@@ -138,7 +138,7 @@ public class DevRunAuto extends SwingWorker {
                     //看视频
                     for (int i = 0; i < devs.size(); i++) {
                         ItemBaen dev = devs.get(i);
-                        setDevRun(dev);
+                        setDevRun(dev, 250, 250, 250, -900);
                     }
                     evenData.setRunCodeLast(1);
                     int timeTemp = getTimeDelay(1);
@@ -197,7 +197,7 @@ public class DevRunAuto extends SwingWorker {
     }
 
     //上划
-    private void setDevRun(ItemBaen dev) {
+    private void setDevRun(ItemBaen dev, int startX, int startY, int endX, int endY) {
         Adb.getInstance().onDevicesRun(dev.name, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdState(int state, String res) {
