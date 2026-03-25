@@ -104,12 +104,20 @@ public class Adb extends CmdBase {
     }
 
     //0 运行正常 1 设备不存在
-    //滑动屏幕
+    //滑动屏幕 adb -s RRCX1066YVD shell input swipe 250 250 250 -10
     public void onDevicesRun(String devName, int startX, int startY, int endX, int endY,
                              OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb -s " + devName + " shell";
         //是连接命令 不用在设置 getAdbPath()
         String cmd2 = "input swipe " + startX + " " + startY + " " + endX + " " + endY;
+        String cmd3 = cmd + " " + cmd2;
+        onRunCmd(cmd3, onCmdBack);
+    }
+
+    public void onDevicesRun(String devName, String xyxy, OnCmdBack onCmdBack) {
+        String cmd = getAdbPath() + "adb -s " + devName + " shell";
+        //是连接命令 不用在设置 getAdbPath()
+        String cmd2 = "input swipe " + xyxy;
         String cmd3 = cmd + " " + cmd2;
         onRunCmd(cmd3, onCmdBack);
     }

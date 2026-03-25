@@ -4,6 +4,7 @@ import com.adb.manager.command.Adb;
 import com.aes.manger.AESWindow;
 import com.adb.manager.AdbWindow;
 import com.test.Calculator;
+import com.utile.XmlUtile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,6 +20,8 @@ public class AppMain {
         //test12();
 
         //imgSetSize();
+        //XmlUtile.setXmlName();
+        //XmlUtile.readConfig(XmlUtile.xmlName);
     }
 
     private static void test12() {

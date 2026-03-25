@@ -131,6 +131,11 @@ public class DevRunAuto extends SwingWorker {
                             setDevRunBack(dev);
                             runTimeDelay(5);
                             //
+                            if (evenData.dataType == 2) {
+                                setDevRun(dev, "250 250 250 100");
+                                runTimeDelay(5);
+                            }
+                            //
                             setDevRunBack(dev);
                             runTimeDelay(5);
                         }
@@ -138,7 +143,7 @@ public class DevRunAuto extends SwingWorker {
                     //看视频
                     for (int i = 0; i < devs.size(); i++) {
                         ItemBaen dev = devs.get(i);
-                        setDevRun(dev, 250, 250, 250, -900);
+                        setDevRun(dev, "250 250 250 -900");
                     }
                     evenData.setRunCodeLast(1);
                     int timeTemp = getTimeDelay(1);
@@ -155,13 +160,21 @@ public class DevRunAuto extends SwingWorker {
                             setDevRunClick(dev, evenData.videoBtnX, evenData.videoBtnY);
                             runTimeDelay(5);
                             //
-                            setDevRunClick(dev, evenData.actBtnX, evenData.actBtnY);
-                            runTimeDelay(5);
+                            if (evenData.dataType == 1) {
+                                setDevRunClick(dev, evenData.actBtnX, evenData.actBtnY);
+                                runTimeDelay(5);
+                            }
+                            if (evenData.dataType == 2) {
+                                setDevRun(dev, evenData.adSlide);
+                                runTimeDelay(5);
+                                setDevRunClick(dev, evenData.actBtnX2, evenData.actBtnY2);
+                                runTimeDelay(5);
+                            }
                             //
                             setDevRunClick(dev, evenData.taskBtnX, evenData.taskBtnY);
                             runTimeDelay(5);
                             //
-                            setDevRunClick(dev, evenData.adBtnX, evenData.getAdBtnY);
+                            setDevRunClick(dev, evenData.adBtnX, evenData.adBtnY);
                             runTimeDelay(5);
                         }
                         timeTemp = getTimeDelay(3);
@@ -197,8 +210,8 @@ public class DevRunAuto extends SwingWorker {
     }
 
     //上划
-    private void setDevRun(ItemBaen dev, int startX, int startY, int endX, int endY) {
-        Adb.getInstance().onDevicesRun(dev.name, new CmdBase.OnCmdBack() {
+    private void setDevRun(ItemBaen dev, String xyxy) {
+        Adb.getInstance().onDevicesRun(dev.name, xyxy, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdState(int state, String res) {
                 System.out.println("setDevRun结果回调1：" + state + " :" + res);

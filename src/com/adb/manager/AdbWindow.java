@@ -14,8 +14,8 @@ import com.adb.manager.command.DevManager;
 import com.adb.manager.ui.ADBView;
 import com.utile.FileUtile;
 import com.utile.IPS;
+import com.utile.XmlUtile;
 import com.view.JPanelFixed;
-import com.view.JPanelMin;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -32,7 +32,6 @@ import java.util.Map;
 public class AdbWindow {
     private JFrame rootView;
     public static String keyName = "sign_file_data";
-    public static String keyNameAd = "ad_data.text";
 
     public void initView() {
 
@@ -484,27 +483,22 @@ public class AdbWindow {
                         @Override
                         public EventBean getEventData() {
                             if (eventBean == null) {
-                                Object bean = FileUtile.getObj(keyNameAd);
-                                if (bean != null) {
-                                    eventBean = (EventBean) bean;
-                                } else {
-                                    eventBean = new EventBean();
-                                    //赚钱按钮
-                                    eventBean.videoBtnX = 538;
-                                    eventBean.videoBtnY = 2121;
-                                    //活动按钮
-                                    eventBean.actBtnX = 919;
-                                    eventBean.actBtnY = 1592;
-                                    //任务按钮
-                                    eventBean.taskBtnX = 517;
-                                    eventBean.taskBtnY = 2013;
-                                    //广告按钮
-                                    eventBean.adBtnX = 849;
-                                    eventBean.getAdBtnY = 1607;
-                                    FileUtile.saveObj(eventBean,keyNameAd);
-                                }
+                                eventBean = XmlUtile.readConfig(XmlUtile.xmlName);
+                               /* eventBean = new EventBean();
+                                //赚钱按钮
+                                eventBean.videoBtnX = 538;
+                                eventBean.videoBtnY = 2121;
+                                //活动按钮
+                                eventBean.actBtnX = 919;
+                                eventBean.actBtnY = 1592;
+                                //任务按钮
+                                eventBean.taskBtnX = 517;
+                                eventBean.taskBtnY = 2013;
+                                //广告按钮
+                                eventBean.adBtnX = 849;
+                                eventBean.adBtnY = 1607;
                                 //广告次数
-                                eventBean.adNum = 20;
+                                eventBean.adNum = 20;*/
                             }
                             return eventBean;
                         }
