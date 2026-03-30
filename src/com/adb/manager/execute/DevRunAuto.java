@@ -132,6 +132,8 @@ public class DevRunAuto extends SwingWorker {
                             runTimeDelay(5);
                             //
                             if (evenData.dataType == 2) {
+                                //String xy= evenData.getUpwardXY();
+                                // setDevRun(dev, xy);
                                 setDevRun(dev, "250 250 250 1000");
                                 runTimeDelay(5);
                             }
@@ -143,7 +145,9 @@ public class DevRunAuto extends SwingWorker {
                     //看视频
                     for (int i = 0; i < devs.size(); i++) {
                         ItemBaen dev = devs.get(i);
-                        setDevRun(dev, "250 250 250 -900");
+                        String xy = evenData.getUpwardXY();
+                        setDevRun(dev, xy);
+                        // setDevRun(dev, "250 250 250 -900");
                     }
                     evenData.setRunCodeLast(1);
                     int timeTemp = getTimeDelay(1);

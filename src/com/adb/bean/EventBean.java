@@ -3,6 +3,7 @@ package com.adb.bean;
 import com.sun.org.apache.bcel.internal.generic.PUSH;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by guom on 2019/12/19.
@@ -10,6 +11,7 @@ import java.io.Serializable;
 public class EventBean implements Serializable {
     //数据类型
     public int dataType;
+    public int w, h;
     //x=538 y=2121
     public int videoBtnX, videoBtnY;//赚钱按钮
     public String adSlide;//滑动 250 250 250 -10
@@ -58,5 +60,35 @@ public class EventBean implements Serializable {
 
     public int getVideoTime() {
         return videoTime;
+    }
+
+    //获取一个内容上划坐标
+    public String getUpwardXY() {
+        int minW = 100;
+        int maxW = w - 100;
+        //
+        int minH = (h / 3) * 2;
+        int maxH = h - 100;
+        int x1 = getRandom(minW, maxW);
+        int y1 = getRandom(minH, maxH);
+        //
+        int x2 = getRandom(x1 - 50, x1 + 50);
+        int maxMove = h - minH;
+        if (maxMove < 900) {
+            maxMove = 900;
+        }
+        int move = getRandom(500, maxMove);
+        int y2 = getRandom(y1 - move, y1 - move);
+        //
+        return x1 + " " + y1 + " " + x2 + " " + y2;
+    }
+
+    //minI:最小值    maxI:最大值
+    private int getRandom(int minI, int maxI) {
+        Random random = new Random();
+        int min = minI; // 最小值
+        int max = maxI; // 最大值
+        int randomInt = random.nextInt(max - min + 1) + min;
+        return randomInt;
     }
 }

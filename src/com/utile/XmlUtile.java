@@ -20,6 +20,7 @@ public class XmlUtile {
 
     //读取配置
     public static EventBean readConfig(String fileName) {
+        //EventBean bean = getEventBeanTest();
         EventBean bean = null;
         try {
             File file = new File(fileName);
@@ -35,6 +36,7 @@ public class XmlUtile {
             for (int i = 0; i < bookNodes.getLength(); i++) {
                 Node bookNode = bookNodes.item(i);
                 Element bookElement = (Element) bookNode;
+                String WH = bookElement.getElementsByTagName("WH").item(0).getTextContent();
                 String dataType = bookElement.getElementsByTagName("dataType").item(0).getTextContent();
                 String videoBtnXY = bookElement.getElementsByTagName("videoBtnXY").item(0).getTextContent();
                 String adSlide = bookElement.getElementsByTagName("adSlide").item(0).getTextContent();
@@ -48,10 +50,14 @@ public class XmlUtile {
                 bean.dataType = stringToInt(dataType);
                 //
                 String[] str = videoBtnXY.split("_");
+                bean.w = stringToInt(str[0]);
+                bean.h = stringToInt(str[1]);
+                //
+                str = videoBtnXY.split("_");
                 bean.videoBtnX = stringToInt(str[0]);
                 bean.videoBtnY = stringToInt(str[1]);
                 //
-                bean.adSlide = adSlide.replace("_"," ");
+                bean.adSlide = adSlide.replace("_", " ");
                 //
                 str = actBtnXY.split("_");
                 bean.actBtnX = stringToInt(str[0]);
@@ -71,7 +77,7 @@ public class XmlUtile {
                 //
                 bean.adNum = Integer.parseInt(adNum);
                 //
-                System.out.println("dataType:" + dataType + " videoBtnXY:" + videoBtnXY + " actBtnXY:" + actBtnXY +
+                System.out.println("dataType:" + dataType + " WH:" + WH + " videoBtnXY:" + videoBtnXY + " actBtnXY:" + actBtnXY +
                         " taskBtnXY:" + taskBtnXY + " adSlide:" + adSlide + " adBtnXY:" + adBtnXY + " actBtnXY2:" + actBtnXY2 + " adNum:" + adNum);
             }
 
@@ -111,6 +117,10 @@ public class XmlUtile {
             Element dataType = document.createElement("dataType");
             dataType.appendChild(document.createTextNode("2"));
             data1.appendChild(dataType);
+            //宽和高
+            Element WH = document.createElement("WH");
+            WH.appendChild(document.createTextNode("1080_2340"));
+            data1.appendChild(WH);
             //赚钱按钮
             Element videoBtnXY = document.createElement("videoBtnXY");
             videoBtnXY.appendChild(document.createTextNode("538_2121"));
@@ -156,5 +166,24 @@ public class XmlUtile {
         } catch (Exception e) {
             System.out.println("写入错误：" + e.getMessage());
         }
+    }
+
+    private static EventBean getEventBeanTest() {
+        EventBean eventBean = new EventBean();
+        //赚钱按钮
+        eventBean.videoBtnX = 538;
+        eventBean.videoBtnY = 2121;
+        //活动按钮
+        eventBean.actBtnX = 919;
+        eventBean.actBtnY = 1592;
+        //任务按钮
+        eventBean.taskBtnX = 517;
+        eventBean.taskBtnY = 2013;
+        //广告按钮
+        eventBean.adBtnX = 849;
+        eventBean.adBtnY = 1607;
+        //广告次数
+        eventBean.adNum = 20;
+        return eventBean;
     }
 }

@@ -1,5 +1,6 @@
 package com.adb.manager.execute;
 
+import com.adb.bean.EventBean;
 import com.adb.manager.command.Adb;
 import com.cmd.CmdBase;
 import com.adb.bean.ItemBaen;
@@ -26,8 +27,11 @@ public class DevRun extends SwingWorker {
         return runType;
     }
 
+    private EventBean evenData;
+
     public DevRun(DevRunListener devRunListener) {
         this.devRunListener = devRunListener;
+        evenData = devRunListener.getEventData();
     }
 
     public void setStop() {
@@ -78,7 +82,6 @@ public class DevRun extends SwingWorker {
         while (devs.size() > 0) {
             for (int i = 0; i < devs.size(); i++) {
                 ItemBaen dev = devs.get(i);
-                dev.runType = runType;
                 setRun(dev);
             }
             int timeTemp = getTimeDelay();
@@ -106,7 +109,7 @@ public class DevRun extends SwingWorker {
 
     //开始运行
     private void setRun(ItemBaen dev) {
-        switch (dev.runType) {
+        switch (runType) {
             case 1:
                 //上下动
                 setDevRun(dev);
@@ -134,7 +137,8 @@ public class DevRun extends SwingWorker {
     }
 
     private void setDevRun(ItemBaen dev) {
-        Adb.getInstance().onDevicesRun(dev.name, new CmdBase.OnCmdBack() {
+        String xy = evenData.getUpwardXY();
+        Adb.getInstance().onDevicesRun(dev.name, xy, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdState(int state, String res) {
                 System.out.println("setDevRun结果回调1：" + state + " :" + res);
@@ -153,8 +157,10 @@ public class DevRun extends SwingWorker {
     }
 
     private void setDevRunClick(ItemBaen dev) {
-        dev.x = 827;
-        dev.y = 1610;
+       /* dev.x = 827;
+        dev.y = 1610;*/
+        dev.x = evenData.adBtnX;
+        dev.y = evenData.adBtnY;
         Adb.getInstance().onDevicesRunClick(dev.name, dev.x, dev.y, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdState(int state, String res) {
