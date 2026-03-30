@@ -409,6 +409,14 @@ public class AdbWindow {
                                 runBtn.setText("开始运行");
                             }
                         }
+                        private EventBean eventBean;
+                        @Override
+                        public EventBean getEventData() {
+                            if (eventBean == null) {
+                                eventBean = XmlUtile.readConfig(XmlUtile.xmlName);
+                            }
+                            return eventBean;
+                        }
                     }, 1);
 
                 } else {
@@ -442,6 +450,16 @@ public class AdbWindow {
                                 onBtnClick(3, "获取已链接的设备");
                                 adBtn.setText("XAXD开始运行");
                             }
+                        }
+
+                        private EventBean eventBean;
+
+                        @Override
+                        public EventBean getEventData() {
+                            if (eventBean == null) {
+                                eventBean = XmlUtile.readConfig(XmlUtile.xmlName);
+                            }
+                            return eventBean;
                         }
                     }, 2);
 
@@ -484,21 +502,6 @@ public class AdbWindow {
                         public EventBean getEventData() {
                             if (eventBean == null) {
                                 eventBean = XmlUtile.readConfig(XmlUtile.xmlName);
-                               /* eventBean = new EventBean();
-                                //赚钱按钮
-                                eventBean.videoBtnX = 538;
-                                eventBean.videoBtnY = 2121;
-                                //活动按钮
-                                eventBean.actBtnX = 919;
-                                eventBean.actBtnY = 1592;
-                                //任务按钮
-                                eventBean.taskBtnX = 517;
-                                eventBean.taskBtnY = 2013;
-                                //广告按钮
-                                eventBean.adBtnX = 849;
-                                eventBean.adBtnY = 1607;
-                                //广告次数
-                                eventBean.adNum = 20;*/
                             }
                             return eventBean;
                         }
