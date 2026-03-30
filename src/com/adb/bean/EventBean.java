@@ -1,7 +1,5 @@
 package com.adb.bean;
 
-import com.sun.org.apache.bcel.internal.generic.PUSH;
-
 import java.io.Serializable;
 import java.util.Random;
 
@@ -63,8 +61,25 @@ public class EventBean implements Serializable {
         return videoTime;
     }
 
+    private String xySlideStr = "";
+
     //获取一个内容上划坐标
     public String getUpwardXY() {
+        String temp = getSlideXY();
+        String str1 = getSlideXY();
+        String str2 = getSlideXY();
+        //
+        if (temp.equals(xySlideStr)) {
+            temp = str1;
+        }
+        if (temp.equals(xySlideStr)) {
+            temp = str2;
+        }
+        xySlideStr = temp;
+        return temp;
+    }
+
+    private String getSlideXY() {
         int minW = 100;
         int maxW = w - 100;
         //
@@ -84,8 +99,24 @@ public class EventBean implements Serializable {
         return x1 + " " + y1 + " " + x2 + " " + y2;
     }
 
+    private String xyNodeStr = "";
+
     //获取一个点
     public String getAdNode() {
+        String temp = getAdClick();
+        String str1 = getAdClick();
+        String str2 = getAdClick();
+        if (temp.equals(xyNodeStr)) {
+            temp = str1;
+        }
+        if (temp.equals(xyNodeStr)) {
+            temp = str2;
+        }
+        xyNodeStr = temp;
+        return temp;
+    }
+
+    private String getAdClick() {
         int x = getRandom(adX1, adX2);
         int y = getRandom(adY1, adY2);
         return x + " " + y;
