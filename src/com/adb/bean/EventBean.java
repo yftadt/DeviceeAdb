@@ -88,15 +88,25 @@ public class EventBean implements Serializable {
         int x1 = getRandom(minW, maxW);
         int y1 = getRandom(minH, maxH);
         //
-        int x2 = getRandom(x1 - 50, x1 + 50);
+        int minX2 = x1 - 200;
+        if (minX2 < 0) {
+            minX2 = 0;
+        }
+        int maxX2 = x1 + 200;
+        if (maxX2 > w) {
+            maxX2 = w;
+        }
+        int x2 = getRandom(minX2, maxX2);
         int maxMove = h - minH;
         if (maxMove < 900) {
             maxMove = 900;
         }
         int move = getRandom(500, maxMove);
+        //
         int y2 = getRandom(y1 - move, y1 - move);
         //
-        return x1 + " " + y1 + " " + x2 + " " + y2;
+        int time = getRandom(100, 800);
+        return x1 + " " + y1 + " " + x2 + " " + y2 + " " + time;
     }
 
     private String xyNodeStr = "";
