@@ -45,6 +45,8 @@ public class XmlUtile {
 
                 String taskBtnXY = bookElement.getElementsByTagName("taskBtnXY").item(0).getTextContent();
                 String adBtnXY = bookElement.getElementsByTagName("adBtnXY").item(0).getTextContent();
+                String adXY = bookElement.getElementsByTagName("adXY").item(0).getTextContent();
+
                 String adNum = bookElement.getElementsByTagName("adNum").item(0).getTextContent();
                 bean = new EventBean();
                 bean.dataType = stringToInt(dataType);
@@ -74,6 +76,12 @@ public class XmlUtile {
                 str = adBtnXY.split("_");
                 bean.adBtnX = stringToInt(str[0]);
                 bean.adBtnY = stringToInt(str[1]);
+                //
+                str = adXY.split("_");
+                bean.adX1 = stringToInt(str[0]);
+                bean.adX2 = stringToInt(str[1]);
+                bean.adY1 = stringToInt(str[2]);
+                bean.adY2 = stringToInt(str[3]);
                 //
                 bean.adNum = Integer.parseInt(adNum);
                 //
@@ -147,7 +155,11 @@ public class XmlUtile {
             Element adBtnX = document.createElement("adBtnXY");
             adBtnX.appendChild(document.createTextNode("845_1730"));
             data1.appendChild(adBtnX);
-
+            //广告adXY
+            Element adXY = document.createElement("adXY");
+            //x1 x2 y1 y2
+            adXY.appendChild(document.createTextNode("813_946_1701_2006"));
+            data1.appendChild(adXY);
             //adNum 广告次数
             Element adNum = document.createElement("adNum");
             adNum.appendChild(document.createTextNode("20"));

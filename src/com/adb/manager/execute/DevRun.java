@@ -159,9 +159,10 @@ public class DevRun extends SwingWorker {
     private void setDevRunClick(ItemBaen dev) {
        /* dev.x = 827;
         dev.y = 1610;*/
-        dev.x = evenData.adBtnX;
-        dev.y = evenData.adBtnY;
-        Adb.getInstance().onDevicesRunClick(dev.name, dev.x, dev.y, new CmdBase.OnCmdBack() {
+        //dev.x = evenData.adBtnX;
+        //dev.y = evenData.adBtnY;
+        String xy = evenData.getAdNode();
+        Adb.getInstance().onDevicesRunClick(dev.name, xy, new CmdBase.OnCmdBack() {
             @Override
             public void onCmdState(int state, String res) {
                 System.out.println("结果回调1：" + state + " :" + res);

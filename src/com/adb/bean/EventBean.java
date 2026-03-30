@@ -24,6 +24,7 @@ public class EventBean implements Serializable {
 
     //x=849 y=1607
     public int adBtnX, adBtnY;//广告按钮
+    public int adX1, adX2, adY1, adY2;
     public int adNum;//广告次数
     //1 看视频 2 看广告
     private int runCode = 1;
@@ -81,6 +82,13 @@ public class EventBean implements Serializable {
         int y2 = getRandom(y1 - move, y1 - move);
         //
         return x1 + " " + y1 + " " + x2 + " " + y2;
+    }
+
+    //获取一个点
+    public String getAdNode() {
+        int x = getRandom(adX1, adX2);
+        int y = getRandom(adY1, adY2);
+        return x + " " + y;
     }
 
     //minI:最小值    maxI:最大值
