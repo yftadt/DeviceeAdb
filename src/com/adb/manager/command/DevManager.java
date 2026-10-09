@@ -97,5 +97,8 @@ public class DevManager {
         new AdbMsg(listener).execute();
     }
 
+    public void adbPair(DevAdbListener listener, String address, String pairingCode) {
+        new AdbPair(listener, address, pairingCode).execute();
+    }
 
 }

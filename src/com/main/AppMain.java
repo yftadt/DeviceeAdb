@@ -18,7 +18,6 @@ public class AppMain {
         //AESRunIng();
         adbRunIng();
         //test12();
-
         //imgSetSize();
         //XmlUtile.setXmlName();
         //XmlUtile.readConfig(XmlUtile.xmlName);

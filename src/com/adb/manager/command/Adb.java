@@ -221,11 +221,20 @@ public class Adb extends CmdBase {
 
 
     //使用IP、端口号  方式链接
+    //adb connect 10.168.201.104:44437
     public void onDevConnectWifi(String ip, String devPort, OnCmdBack onCmdBack) {
         String cmd = getAdbPath() + "adb connect " + ip + ":" + devPort;
         onRunCmd(cmd, onCmdBack);
 
     }
+
+    //使用IP、端口号和配对码配对无线调试设备
+    //adb pair 10.168.201.104:3668 063946
+    public void onDevPair(String address, String pairingCode, OnCmdBack onCmdBack) {
+        String cmd = getAdbPath() + "adb pair " + address + " " + pairingCode;
+        onRunCmd(cmd, onCmdBack);
+    }
+
     //adb shell am force-stop xxxxxx
     //adb  shell am start -n xxxxxx/xxxx
     //adb shell pm list package

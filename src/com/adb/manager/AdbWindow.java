@@ -187,7 +187,26 @@ public class AdbWindow {
 
     //设置端口号，wifi 链接
     private JPanel getRightDown() {
-        final JPanel view = new JPanel(new GridLayout(7, 1));//6行 1列
+        final JPanel view = new JPanel(new GridLayout(9, 1));//配对和无线连接
+        //无线调试配对地址，格式为 IP:端口
+        pairAddressET = new JTextField();
+        pairAddressET.setColumns(10);
+        pairAddressET.setToolTipText("配对地址，例如 192.168.1.2:37123");
+        view.add(pairAddressET, new FlowLayout(FlowLayout.LEFT));
+        //无线调试配对码
+        pairingCodeET = new JTextField();
+        pairingCodeET.setColumns(10);
+        pairingCodeET.setToolTipText("输入手机显示的配对码");
+        view.add(pairingCodeET, new FlowLayout(FlowLayout.LEFT));
+        //配对按钮
+        JButton pairBtn = new JButton("配对");
+        pairBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onPairClick();
+            }
+        });
+        view.add(pairBtn, new FlowLayout(FlowLayout.LEFT));
         //提示UI
         hintJl = new JTextField();
         //hintJl = new JLabel();
@@ -202,16 +221,6 @@ public class AdbWindow {
         portET.setSize(200, 25);
         portET.setColumns(10);
         view.add(portET, new FlowLayout(FlowLayout.LEFT));
-        //
-        JButton portBtn = new JButton("设置端口");
-        portBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("portBtn");
-                onBtnClick(2, "设置端口号");
-            }
-        });
-        view.add(portBtn, new FlowLayout(FlowLayout.LEFT));
         //IP 输入框
         ipET = new JTextField();
         ipET.setSize(200, 25);
@@ -260,6 +269,10 @@ public class AdbWindow {
     private JTextField ipET;
     //端口号 输入框
     private JTextField portET;
+    //配对地址输入框，格式为 IP:端口
+    private JTextField pairAddressET;
+    //配对码输入框
+    private JTextField pairingCodeET;
     //消息显示
     private JLabel msgJl;
     //已链接的设备
@@ -545,6 +558,51 @@ public class AdbWindow {
                 });
                 break;
         }
+    }
+
+    private void onPairClick() {
+        String address = pairAddressET.getText().trim();
+        if (!address.isEmpty()) {
+            address = address.replace('：', ':').replaceAll("\\s+", "");
+            pairAddressET.setText(address);
+        }
+        if (!IPS.isPairAddress(address)) {
+            dialogShowMsg("请输入正确的配对地址，格式为 IP:端口");
+            return;
+        }
+        String pairingCode = pairingCodeET.getText().trim();
+        if (pairingCode.isEmpty()) {
+            dialogShowMsg("请输入手机显示的配对码");
+            return;
+        }
+
+        msgJl.setText("开始配对 " + address);
+        final boolean[] isPaired = {false};
+        final String[] pairMessage = {""};
+        DevManager.getInstance().adbPair(new DevAdbListener() {
+            @Override
+            public void onMsgBack(String code, String msg, Object obj) {
+                if (msg != null && msg.toLowerCase().contains("successfully paired")) {
+                    isPaired[0] = true;
+                }
+                if (msg != null && !msg.isEmpty()
+                        && !"执行开始".equals(msg)
+                        && !"执行成功".equals(msg)
+                        && !"执行完成".equals(msg)) {
+                    pairMessage[0] = msg;
+                }
+                if ("200".equals(code)) {
+                    msgJl.setText(isPaired[0]
+                            ? "配对成功"
+                            : "配对失败" + (pairMessage[0].isEmpty() ? "" : "：" + pairMessage[0]));
+                    if (isPaired[0]) {
+                        onBtnClick(3, "配对后获取已链接的设备");
+                    }
+                } else if (msg != null && !msg.isEmpty()) {
+                    msgJl.setText(msg);
+                }
+            }
+        }, address, pairingCode);
     }
 
     //选择了设备
